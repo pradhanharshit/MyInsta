@@ -14,22 +14,28 @@ import HomeFeed from "../components/HomeFeed/HomeFeed";
 import Followers from "../pages/Followers/Followers";
 import Following from "../pages/Following/Following";
 import Profile from "../components/Profile/Profile";
+import AuthRoute from "../components/AuthRoute/AuthRoute";
+import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 
 const Router = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
-        <Route path="/login" element={<LoginPage></LoginPage>}></Route>
-        <Route path="/signup" element={<SignUp></SignUp>}></Route>
+        <Route element={<AuthRoute />}>
+          <Route path="/login" element={<LoginPage></LoginPage>}></Route>
+          <Route path="/signup" element={<SignUp></SignUp>}></Route>
+        </Route>
         <Route path="/" element={<App />}>
-          <Route index element={<HomeFeed />} />
-          <Route path="/bookmarks" element={<Bookmarks />} />
-          <Route path="/my-profile" element={<MyProfile />}>
-            <Route index element={<Profile />} />
-            <Route path="following" element={<Following />} />
-            <Route path="followers" element={<Followers />} />
+          <Route element={<PrivateRoute />}>
+            <Route index element={<HomeFeed />} />
+            <Route path="/bookmarks" element={<Bookmarks />} />
+            <Route path="/my-profile" element={<MyProfile />}>
+              <Route index element={<Profile />} />
+              <Route path="following" element={<Following />} />
+              <Route path="followers" element={<Followers />} />
+            </Route>
+            <Route path="/connect-people" element={<ConnectPeople />}></Route>
           </Route>
-          <Route path="/connect-people" element={<ConnectPeople />}></Route>
         </Route>
       </Route>
     )
