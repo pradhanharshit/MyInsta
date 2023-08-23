@@ -1,47 +1,29 @@
-
-import './App.css'
-import LoginPage from "./pages/Login/LoginPage"
-import {  createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from 'react-router-dom'
-import SignUp from './pages/Signup/SignUp'
-import Home from "./pages/Home/Home"
-import Bookmarks from './pages/Bookmarks/Bookmarks'
-import MyProfile from './pages/MyProfile/MyProfile'
-import ConnectPeople from './pages/ConnectPeople/ConnectPeople'
-import HomeFeed from './components/HomeFeed/HomeFeed'
-import Followers from './pages/Followers/Followers'
-import Following from './pages/Following/Following'
-import Profile from './components/Profile/Profile'
+import "./App.css";
+import BottomBar from "../src/components/BottomBar/BottomBar";
+import SideBar from "../src/components/SideBar/SideBar";
+import SearchBar from "../src/components/SearchBar/SearchBar";
+import HomeProfile from "../src/components/HomeProfile/HomeProfile";
+import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-
-  const router = createBrowserRouter(createRoutesFromElements(
-    <Route>
-        <Route path="/login" element={<LoginPage></LoginPage>}></Route>
-        <Route path="/signup" element={<SignUp></SignUp>}></Route>
-        <Route path="/" element={<Home />}>
-          <Route index element={<HomeFeed />}/>
-          <Route path="/bookmarks" element={<Bookmarks />} />
-          <Route path="/my-profile" element={<MyProfile />}>
-            <Route index element={<Profile />} />
-            <Route path="following" element={<Following />} />
-            <Route path="followers" element={<Followers />} />
-          </Route>
-          <Route path="/connect-people" element={<ConnectPeople />}>
-            
-          </Route>
-        </Route>
-    </Route>
-  ))
-
   return (
-    <>
-        <RouterProvider router={router}/>
-    </>
-  )
+    <div className="home-container w-m-4xl">
+      <div className="home-left">
+        <SideBar />
+      </div>
+      <div className="home-center">
+        <Outlet />
+      </div>
+      <div className="home-right">
+        <SearchBar />
+        <HomeProfile />
+      </div>
+      <BottomBar />
+      <ToastContainer position="bottom-right" />
+    </div>
+  );
 }
 
-export default App
-
-{/* <Routes> 
-        
-        </Routes> */}
+export default App;
