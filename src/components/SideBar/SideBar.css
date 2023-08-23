@@ -1,0 +1,30 @@
+.side-comp {
+    display: flex;
+    align-items: start;
+    text-align: left;
+    margin-left:auto;
+    margin-right:2rem;
+    width:max-content;
+    margin-top:2rem;
+    position: sticky;
+    top:2rem;
+    height:90%;
+} 
+
+.active .heroicon-outline {
+    fill: rgb(96 165 250);
+    stroke: none;
+}
+
+.active {
+    color: rgb(96 165 250);
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+
+@media screen and (max-width: 850px) {
+    .side-comp {
+        display: none;
+    }
+}

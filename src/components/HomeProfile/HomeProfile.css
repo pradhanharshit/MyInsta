@@ -1,0 +1,11 @@
+.homeprofile-container {
+    position: relative;
+    margin-top: 20px;
+    height: fit-content;
+}
+
+.homeprofile-img {
+    position: absolute;
+    top: 30%;
+    left: 38%;
+}

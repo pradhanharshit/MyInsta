@@ -1,0 +1,11 @@
+.post-container {
+    margin: 2rem;
+    height: max-content;
+    width: 45rem;
+}
+
+@media screen and (max-width: 600px) {
+    .post-container {
+        margin: 1rem;
+    }
+}

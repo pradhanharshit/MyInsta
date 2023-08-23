@@ -1,0 +1,33 @@
+.myprofile-container {
+    position: relative;
+    margin-top: 20px;
+    height: 30rem;
+    width: 70%;
+}
+
+.myprofile-img {
+    height: 7.5rem;
+    width: 7.5rem;
+    position: absolute;
+    top: 27%;
+    left: 6%;
+}
+
+.user-title {
+    margin-top: 1rem;
+}
+
+@media screen and (max-width: 680px) {
+    .myprofile-container {
+        width: 90%;
+    }
+    .myprofile-img {
+        top: 30%;
+        left: 35%;
+        height: 5rem;
+        width: 5rem;
+    }
+    .user-title {
+        margin-top: 3rem;
+    }
+}

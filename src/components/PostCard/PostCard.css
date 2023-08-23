@@ -1,0 +1,22 @@
+.post-container {
+    margin: 1.5rem 2rem 4rem 2rem;
+}
+
+.post-image {
+    width: 90%;
+    margin: 1rem auto;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.caption {
+    margin: 1rem 2.5rem;
+}
+
+
+@media screen and (max-width: 680px) {
+    .post-container{
+    width: 90%;
+    margin: 2rem 1rem 2rem 1rem;   
+  }
+  }
