@@ -2,11 +2,18 @@ import { useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import Card from "../Card/Card";
 import { PhotoIcon, FaceSmileIcon } from "@heroicons/react/24/outline";
+import { useEffect } from "react";
+import { addPostHandler, getAllPosts } from "../../services/postService";
+import { useSelector, useDispatch } from "react-redux";
 
 const NewPostCard = () => {
   const { themeObject } = useTheme();
+  const { authToken } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
 
   const [postMedia, setPostMedia] = useState({});
+  const [postContent, setPostContent] = useState("");
 
   const handlePostMediaChange = async (e) => {
     const imageFile = e.target.files[0];
@@ -29,6 +36,7 @@ const NewPostCard = () => {
       .then((data) => setPostMedia(data.url));
   };
 
+  useEffect(() => {});
   return (
     <Card>
       <div className="flex gap-3">
@@ -42,8 +50,12 @@ const NewPostCard = () => {
         <textarea
           className="grow rounded-2xl p-3 border-2 focus:border-blue-400 outline-none"
           placeholder="What's on your mind?"
-          id=""
-          style={{ backgroundColor: themeObject.primary }}
+          value={postContent}
+          onChange={(e) => setPostContent(e.target.value)}
+          style={{
+            backgroundColor: themeObject.primary,
+            color: themeObject.text,
+          }}
         ></textarea>
       </div>
 
@@ -65,7 +77,21 @@ const NewPostCard = () => {
           <FaceSmileIcon className="stroke-blue-400 h-8 w-8" />
         </div>
         <div className="grow text-right">
-          <button className="bg-blue-400 px-4 py-1 rounded-2xl text-white mr-4">
+          <button
+            className="bg-blue-400 px-4 py-1 rounded-2xl text-white mr-4"
+            onClick={async () => {
+              await addPostHandler(
+                {
+                  content: postContent,
+                  media: postMedia,
+                },
+                authToken
+              );
+              dispatch(getAllPosts());
+              setPostContent("");
+              setPostMedia("");
+            }}
+          >
             Post
           </button>
         </div>
