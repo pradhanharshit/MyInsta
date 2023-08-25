@@ -5,7 +5,7 @@ import { makeServer } from "./server";
 import { Provider } from "react-redux";
 import store from "./store/store.js";
 import Router from "./Router/Router.jsx";
-import { ThemeProvider } from "./context/themeContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 // Call make Server
 makeServer();

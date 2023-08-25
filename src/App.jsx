@@ -6,10 +6,15 @@ import HomeProfile from "../src/components/HomeProfile/HomeProfile";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTheme } from "./context/ThemeContext";
 
 function App() {
+  const { themeObject } = useTheme();
   return (
-    <div className="home-container w-m-4xl">
+    <div
+      className="home-container w-m-4xl"
+      style={{ backgroundColor: themeObject.primary }}
+    >
       <div className="home-left">
         <SideBar />
       </div>
