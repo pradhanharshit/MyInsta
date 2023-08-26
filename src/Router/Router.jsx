@@ -9,6 +9,7 @@ import SignUp from "../pages/Signup/SignUp";
 import App from "../App";
 import Bookmarks from "../pages/Bookmarks/Bookmarks";
 import MyProfile from "../pages/MyProfile/MyProfile";
+import Explore from "../pages/Explore/Explore";
 import ConnectPeople from "../pages/ConnectPeople/ConnectPeople";
 import HomeFeed from "../components/HomeFeed/HomeFeed";
 import Followers from "../pages/Followers/Followers";
@@ -28,6 +29,7 @@ const Router = () => {
         <Route path="/" element={<App />}>
           <Route element={<PrivateRoute />}>
             <Route index element={<HomeFeed />} />
+            <Route path="/explore" element={<Explore />} />
             <Route path="/bookmarks" element={<Bookmarks />} />
             <Route path="/my-profile" element={<MyProfile />}>
               <Route index element={<Profile />} />
