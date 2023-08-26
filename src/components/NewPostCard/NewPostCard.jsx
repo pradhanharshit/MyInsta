@@ -3,17 +3,22 @@ import { useTheme } from "../../context/ThemeContext";
 import Card from "../Card/Card";
 import { PhotoIcon, FaceSmileIcon } from "@heroicons/react/24/outline";
 import { useEffect } from "react";
-import { addPostHandler, getAllPosts } from "../../services/postService";
+import { addPostHandler } from "../../services/postService";
 import { useSelector, useDispatch } from "react-redux";
+import { addedNewPost } from "../../store/postSlice";
+import { ClickOutHandler } from "react-clickout-ts";
+import EmojiPicker from "emoji-picker-react";
 
 const NewPostCard = () => {
-  const { themeObject } = useTheme();
+  const { theme, themeObject } = useTheme();
   const { authToken } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
   const [postMedia, setPostMedia] = useState({});
   const [postContent, setPostContent] = useState("");
+
+  const [openEmojiSelector, setOpenEmojiSelector] = useState(false);
 
   const handlePostMediaChange = async (e) => {
     const imageFile = e.target.files[0];
@@ -73,8 +78,25 @@ const NewPostCard = () => {
             <PhotoIcon className="stroke-blue-400 h-8 w-8" />
           </label>
         </div>
-        <div>
-          <FaceSmileIcon className="stroke-blue-400 h-8 w-8" />
+        <div className="relative">
+          <FaceSmileIcon
+            className="stroke-blue-400 h-8 w-8"
+            onClick={() => setOpenEmojiSelector(true)}
+          />
+          <ClickOutHandler onClickOut={() => setOpenEmojiSelector(false)}>
+            <div className="absolute">
+              {openEmojiSelector && (
+                <div>
+                  <EmojiPicker
+                    theme={theme}
+                    onEmojiClick={(e) => {
+                      setPostContent(postContent + e.emoji);
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+          </ClickOutHandler>
         </div>
         <div className="grow text-right">
           <button
@@ -87,7 +109,7 @@ const NewPostCard = () => {
                 },
                 authToken
               );
-              dispatch(getAllPosts());
+              dispatch(addedNewPost());
               setPostContent("");
               setPostMedia("");
             }}
