@@ -5,6 +5,7 @@ import {
   ArrowRightOnRectangleIcon,
   UserIcon,
   SunIcon,
+  BoltIcon,
 } from "@heroicons/react/24/outline";
 import { HomeIcon } from "@heroicons/react/20/solid";
 import { NavLink } from "react-router-dom";
@@ -34,6 +35,14 @@ const SideBar = () => {
           style={{ stroke: themeObject.text }}
         ></HomeIcon>
         <p className="text-xl page-title">Home</p>
+      </NavLink>
+
+      <NavLink to="/explore" className="flex space-x-3 items-center mb-10">
+        <BoltIcon
+          className="heroicon-outline h-[30px] w-[30px]"
+          style={{ stroke: themeObject.text }}
+        ></BoltIcon>
+        <p className="text-xl page-title">Explore</p>
       </NavLink>
 
       <NavLink to="/bookmarks" className="flex space-x-3 items-center mb-10">
