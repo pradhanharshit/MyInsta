@@ -78,7 +78,10 @@ export const loginHandler = function (schema, request) {
       );
     }
     if (password === foundUser.password) {
-      const encodedToken = sign({ _id: foundUser._id, username }, "secret");
+      const encodedToken = sign(
+        { _id: foundUser._id, username: foundUser.username },
+        "secret"
+      );
       return new Response(200, {}, { foundUser, encodedToken });
     }
     return new Response(
