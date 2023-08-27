@@ -5,12 +5,12 @@ import { useDispatch } from "react-redux";
 import { loginHandler } from "../../services/authService";
 
 const LoginForm = ({
-  email,
+  username,
   password,
   passwordType,
   rememberMe,
   setRememberMe,
-  setEmail,
+  setUsername,
   setPassword,
   setPasswordType,
   testLoginHandler,
@@ -25,14 +25,14 @@ const LoginForm = ({
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              dispatch(loginHandler({ email, password, rememberMe }));
+              dispatch(loginHandler({ username, password, rememberMe }));
             }}
           >
             <input
               className="text-center border-2 p-1 m-1 w-[250px]"
-              value={email}
+              value={username}
               onChange={(e) => {
-                setEmail(e.target.value);
+                setUsername(e.target.value);
               }}
               type="email"
               placeholder="Email"

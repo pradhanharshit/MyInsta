@@ -5,13 +5,13 @@ import ImageCarousel from "../../components/Carousel/ImageCarousel";
 import "./login.css";
 import { useState } from "react";
 function LoginPage() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordType, setPasswordType] = useState("password");
   const [rememberMe, setRememberMe] = useState(false);
 
   const testLoginHandler = () => {
-    setEmail("test@gmail.com");
+    setUsername("test@harshit");
     setPassword("test");
     setRememberMe(true);
   };
@@ -29,11 +29,11 @@ function LoginPage() {
           <p>logged in</p>
         ) : (
           <LoginForm
-            email={email}
+            username={username}
             password={password}
             passwordType={passwordType}
             isLoggedIn={isLoggedIn}
-            setEmail={setEmail}
+            setUsername={setUsername}
             setPassword={setPassword}
             setLoggedIn={setLoggedIn}
             setPasswordType={setPasswordType}
