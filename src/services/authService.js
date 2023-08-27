@@ -6,11 +6,12 @@ export const loginHandler = createAsyncThunk(
   async ({ username, password, rememberMe }) => {
     console.log("called");
     const res = await axios.post("api/auth/login", { username, password });
+    // console.log(res);
     if (rememberMe) {
       localStorage.setItem(
         "user",
         JSON.stringify({
-          email: res.data.foundUser.email,
+          username: res.data.foundUser.userName,
           _id: res.data.foundUser._id,
           firstName: res.data.foundUser.firstName,
           lastName: res.data.foundUser.lastName,
