@@ -1,26 +1,40 @@
 import { useTheme } from "../../context/ThemeContext";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import "./CommentsModal.css";
-import { useState } from "react";
-import { postCommentHandler } from "../../services/commentsService";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import {
+  getCommentsHandler,
+  postCommentHandler,
+} from "../../services/commentsService";
+import { useSelector, useDispatch } from "react-redux";
 import { onPostUpdate } from "../../store/postSlice";
 
-const CommentsModal = ({ postId, closeOpenModal, comments }) => {
+const CommentsModal = ({ postId, closeOpenModal }) => {
   const { themeObject } = useTheme();
   const { authToken } = useSelector((state) => state.auth);
+  const { ownerData } = useSelector((state) => state.users);
   const [postComment, setPostComment] = useState("");
+  const [comments, setComments] = useState([]);
 
   const dispatch = useDispatch();
 
   const commentHandler = () => {
-    if (postComment.length > 0) {
-      postCommentHandler(postId, { content: postComment }, authToken);
-      setPostComment("");
+    if (postComment !== "") {
+      postCommentHandler(
+        postId,
+        { content: postComment, profilePicture: ownerData.profilePicture },
+        authToken
+      );
+      getCommentsHandler(postId).then((res) => setComments(res.data.comments));
       dispatch(onPostUpdate());
+      setPostComment("");
     }
   };
-  console.log(comments);
+
+  useEffect(() => {
+    getCommentsHandler(postId).then((res) => setComments(res.data.comments));
+  }, []);
+
   return (
     <>
       <div
@@ -56,14 +70,22 @@ const CommentsModal = ({ postId, closeOpenModal, comments }) => {
             Add
           </button>
         </div>
-        {comments.map((comment, index) => {
-          return (
-            <div key={index} className="flex space-x-4 mb-1">
-              <p className="text-blue-400 font-bold">{comment.username}</p>
-              <p style={{ color: themeObject.text }}>{comment.content}</p>
-            </div>
-          );
-        })}
+        {comments.length > 0 &&
+          comments.map((comment, index) => {
+            return (
+              <div key={index} className="flex space-x-4 mb-1">
+                <div className="flex space-x-1">
+                  <img
+                    className="h-[25px] w-[25px] rounded-full"
+                    src={comment.profilePicture}
+                    alt=""
+                  />
+                  <p className="text-blue-400 font-bold">{comment.username}</p>
+                </div>
+                <p style={{ color: themeObject.text }}>{comment.content}</p>
+              </div>
+            );
+          })}
       </div>
     </>
   );
