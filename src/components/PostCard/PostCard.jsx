@@ -6,6 +6,7 @@ import {
   ChatBubbleOvalLeftIcon,
   BookmarkIcon,
   PaperAirplaneIcon,
+  EllipsisHorizontalIcon,
 } from "@heroicons/react/24/outline";
 import { useTheme } from "../../context/ThemeContext";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,6 +18,7 @@ import { onPostUpdate } from "../../store/postSlice";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import CommentsModal from "../CommentsModal/CommentsModal";
+import { deletePostHandler } from "../../services/postService";
 
 const PostCard = ({ postData }) => {
   const { themeObject } = useTheme();
@@ -24,14 +26,15 @@ const PostCard = ({ postData }) => {
   const { ownerData } = useSelector((state) => state.users);
 
   const [openCommentModal, setOpenCommentModal] = useState(false);
+  const [openEditPost, setOpenEditPost] = useState(false);
+  const [editPost, setEditPost] = useState(false);
 
   const dispatch = useDispatch();
 
   const likePost = () => {
-    // console.log(postData._id);
     dispatch(onPostUpdate());
-    dispatch(likePostHandler(postData._id, authToken));
     toast.success("Post Liked!!");
+    dispatch(likePostHandler(postData._id, authToken));
   };
 
   const dislikePost = () => {
@@ -56,25 +59,56 @@ const PostCard = ({ postData }) => {
         />
       )}
       <Card>
-        <div className="flex gap-3">
-          <div>
-            <img
-              className="rounded-full w-14 h-14"
-              src={postData.profilePicture}
-              alt=""
-            />
+        <div className="flex justify-between">
+          <div className="flex gap-3">
+            <div>
+              <img
+                className="rounded-full w-14 h-14"
+                src={postData.profilePicture}
+                alt=""
+              />
+            </div>
+            <div className="text-center">
+              <p className="text-lg" style={{ color: themeObject.text }}>
+                {postData.firstName} {postData.lastName}
+              </p>
+              <p
+                className="text-sm text-gray-600"
+                style={{ color: themeObject.text }}
+              >
+                {postData.username}
+              </p>
+            </div>
           </div>
-          <div className="text-center">
-            <p className="text-lg" style={{ color: themeObject.text }}>
-              {postData.firstName} {postData.lastName}
-            </p>
-            <p
-              className="text-sm text-gray-600"
-              style={{ color: themeObject.text }}
-            >
-              {postData.username}
-            </p>
-          </div>
+          {postData.user_id === ownerData._id && (
+            <div className="flex">
+              <EllipsisHorizontalIcon
+                className="h-[30px] w-[30px]"
+                style={{ color: themeObject.text }}
+                onClick={() => setOpenEditPost(!openEditPost)}
+              />
+              {openEditPost && (
+                <div className="relative">
+                  <div className="absolute flex flex-col top-7 right-0 w-max bg-blue-400 text-white p-3 rounded-xl">
+                    <button>Edit post</button>
+                    <div
+                      className="border-t-2 m-1.5"
+                      style={{ color: themeObject.color }}
+                    ></div>
+                    <button
+                      onClick={() => {
+                        deletePostHandler(postData._id, authToken);
+                        dispatch(onPostUpdate());
+                        toast.success("Post deleted!!");
+                      }}
+                    >
+                      Delete post
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="">
@@ -95,7 +129,7 @@ const PostCard = ({ postData }) => {
           <div className="flex gap-3">
             <div className="flex gap-1">
               <HeartIcon
-                className="icons h-[30px] w-[30px] text-red-400 drop-shadow-2xl hover:animate-bounce"
+                className="icons h-[30px] w-[30px] text-red-400 hover:animate-bounce"
                 onClick={() => {
                   // console.log(postData);
                   postData.likes.likedBy.some(
