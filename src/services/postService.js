@@ -25,3 +25,15 @@ export const getAllPosts = createAsyncThunk("posts/getallposts", async () => {
     console.log(error);
   }
 });
+
+export const deletePostHandler = async (postId, authToken) => {
+  try {
+    await axios.delete(`api/posts/${postId}`, {
+      headers: {
+        authorization: authToken,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
