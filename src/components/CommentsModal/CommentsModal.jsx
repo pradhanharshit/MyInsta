@@ -1,13 +1,16 @@
 import { useTheme } from "../../context/ThemeContext";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import "./CommentsModal.css";
 import { useEffect, useState } from "react";
 import {
+  deleteCommentHandler,
+  editCommentHandler,
   getCommentsHandler,
   postCommentHandler,
 } from "../../services/commentsService";
 import { useSelector, useDispatch } from "react-redux";
 import { onPostUpdate } from "../../store/postSlice";
+import { toast } from "react-toastify";
 
 const CommentsModal = ({ postId, closeOpenModal }) => {
   const { themeObject } = useTheme();
@@ -15,6 +18,11 @@ const CommentsModal = ({ postId, closeOpenModal }) => {
   const { ownerData } = useSelector((state) => state.users);
   const [postComment, setPostComment] = useState("");
   const [comments, setComments] = useState([]);
+
+  const [editComment, setEditComment] = useState(false);
+  const [changedComment, setChangedComment] = useState("");
+  const [editCommentId, setEditCommentId] = useState("");
+  const [commentEdited, setCommentEdited] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -28,12 +36,15 @@ const CommentsModal = ({ postId, closeOpenModal }) => {
       getCommentsHandler(postId).then((res) => setComments(res.data.comments));
       dispatch(onPostUpdate());
       setPostComment("");
+      toast.success("Comment Added!!");
     }
   };
 
   useEffect(() => {
     getCommentsHandler(postId).then((res) => setComments(res.data.comments));
-  }, []);
+  }, [commentEdited]);
+
+  //   console.log(comments);
 
   return (
     <>
@@ -73,16 +84,74 @@ const CommentsModal = ({ postId, closeOpenModal }) => {
         {comments.length > 0 &&
           comments.map((comment, index) => {
             return (
-              <div key={index} className="flex space-x-4 mb-1">
-                <div className="flex space-x-1">
-                  <img
-                    className="h-[25px] w-[25px] rounded-full"
-                    src={comment.profilePicture}
-                    alt=""
-                  />
-                  <p className="text-blue-400 font-bold">{comment.username}</p>
+              <div key={index} className="flex flex-col space-y-2 mb-3">
+                <div className="flex justify-between">
+                  <div className="flex space-x-1">
+                    <img
+                      className="h-[30px] w-[30px] rounded-full"
+                      src={comment.profilePicture}
+                      alt=""
+                    />
+                    <p className="text-blue-400 font-bold">
+                      {comment.username}
+                    </p>
+                  </div>
+                  <div className="flex space-x-1">
+                    <PencilIcon
+                      className="h-[20px] w-[20px]"
+                      style={{ color: themeObject.text }}
+                      onClick={() => {
+                        setEditComment(!editComment);
+                        if (editCommentId === "") {
+                          setEditCommentId(comment._id);
+                        } else setEditCommentId("");
+                        setChangedComment(comment.content);
+                      }}
+                    />
+                    <TrashIcon
+                      className="h-[20px] w-[20px]"
+                      style={{ color: themeObject.text }}
+                      onClick={() => {
+                        deleteCommentHandler(postId, comment._id, authToken);
+                        setCommentEdited(!commentEdited);
+                        toast.success("Comment deleted!!");
+                      }}
+                    />
+                  </div>
                 </div>
-                <p style={{ color: themeObject.text }}>{comment.content}</p>
+                {editCommentId === comment._id ? (
+                  <div className="flex justify-between">
+                    <input
+                      className="rounded-xl p-1 border-blue-400 border-2"
+                      type="text"
+                      value={changedComment}
+                      onChange={(e) => setChangedComment(e.target.value)}
+                      style={{
+                        backgroundColor: themeObject.secondary,
+                        color: themeObject.text,
+                      }}
+                    />
+                    <button
+                      className="bg-blue-400 rounded-xl px-2 py-0.5"
+                      style={{ color: themeObject.text }}
+                      onClick={() => {
+                        editCommentHandler(
+                          { ...comment, content: changedComment },
+                          postId,
+                          comment._id,
+                          authToken
+                        );
+                        setCommentEdited(!commentEdited);
+                        setEditCommentId("");
+                        toast.success("Comment Edited!!");
+                      }}
+                    >
+                      edit
+                    </button>
+                  </div>
+                ) : (
+                  <p style={{ color: themeObject.text }}>{comment.content}</p>
+                )}
               </div>
             );
           })}
