@@ -18,3 +18,20 @@ export const likePostHandler = async (postId, authToken) => {
     console.log(error);
   }
 };
+
+export const dislikePostHandler = async (postId, authToken) => {
+  try {
+    const res = await axios.post(
+      `api/posts/dislike/${postId}`,
+      {},
+      {
+        headers: {
+          authorization: authToken,
+        },
+      }
+    );
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
