@@ -37,3 +37,21 @@ export const deletePostHandler = async (postId, authToken) => {
     console.log(error);
   }
 };
+
+export const editPostHandler = async (postId, postData, authToken) => {
+  try {
+    await axios.post(
+      `api/posts/edit/${postId}`,
+      {
+        postData,
+      },
+      {
+        headers: {
+          authorization: authToken,
+        },
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
