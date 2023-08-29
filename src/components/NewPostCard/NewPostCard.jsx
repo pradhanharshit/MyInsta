@@ -8,15 +8,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { addedNewPost } from "../../store/postSlice";
 import { ClickOutHandler } from "react-clickout-ts";
 import EmojiPicker from "emoji-picker-react";
+import { toast } from "react-toastify";
 
 const NewPostCard = () => {
   const { theme, themeObject } = useTheme();
   const { authToken } = useSelector((state) => state.auth);
+  const { ownerData } = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
 
   const [postMedia, setPostMedia] = useState({});
   const [postContent, setPostContent] = useState("");
+  const [imageReceived, setImageReceived] = useState(false);
 
   const [openEmojiSelector, setOpenEmojiSelector] = useState(false);
 
@@ -38,7 +41,11 @@ const NewPostCard = () => {
 
     await fetch(url, requestOptions)
       .then((res) => res.json())
-      .then((data) => setPostMedia(data.url));
+      .then((data) => {
+        setPostMedia(data.url);
+        setImageReceived(true);
+        toast.success("Media Uploaded!!");
+      });
   };
 
   useEffect(() => {});
@@ -71,6 +78,7 @@ const NewPostCard = () => {
             type="file"
             id="post-input"
             onChange={(e) => {
+              toast.success("Uploading Media!");
               handlePostMediaChange(e);
             }}
           />
@@ -101,17 +109,26 @@ const NewPostCard = () => {
         <div className="grow text-right">
           <button
             className="bg-blue-400 px-4 py-1 rounded-2xl text-white mr-4"
-            onClick={async () => {
-              await addPostHandler(
-                {
-                  content: postContent,
-                  media: postMedia,
-                },
-                authToken
-              );
-              dispatch(addedNewPost());
-              setPostContent("");
-              setPostMedia("");
+            onClick={() => {
+              if (imageReceived) {
+                addPostHandler(
+                  {
+                    comments: [],
+                    content: postContent,
+                    media: postMedia,
+                    firstName: ownerData.firstName,
+                    lastName: ownerData.lastName,
+                    profilePicture: ownerData.profilePicture,
+                    user_id: ownerData._id,
+                  },
+                  authToken
+                );
+                dispatch(addedNewPost());
+                setPostContent("");
+                setPostMedia("");
+                setImageReceived(false);
+                toast.success("Posted!!");
+              } else toast.warning("Upload Media!!");
             }}
           >
             Post
