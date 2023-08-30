@@ -1,3 +1,4 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const addBookmarkHandler = async (postId, authToken) => {
@@ -33,3 +34,19 @@ export const removeBookmarkHandler = async (postId, authToken) => {
     console.log(error);
   }
 };
+
+export const getBookmarkedPosts = createAsyncThunk(
+  "user/bookmark",
+  async (authToken) => {
+    try {
+      const res = await axios.get("api/users/bookmark", {
+        headers: {
+          authorization: authToken,
+        },
+      });
+      return res.data.bookmarks;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
