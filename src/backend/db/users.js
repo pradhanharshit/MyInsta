@@ -12,6 +12,7 @@ export const users = [
     username: "test@harshit",
     password: "test",
     bio: "Hy!! This is Harshit Pradhan",
+    following: [{ _id: "caac2a91-4e40-46ea-813c-ddcbf777be8e" }],
     profilePicture:
       "https://i.pinimg.com/736x/0d/64/14/0d64145c56a53e2886274bf99a10d7d0.jpg",
     coverPicture:
