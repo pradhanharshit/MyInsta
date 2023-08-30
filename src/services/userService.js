@@ -8,7 +8,7 @@ export const getOwnerData = createAsyncThunk(
     try {
       // console.log("tried");
       const res = await axios.get(`/api/users/${ownerid}`);
-      return res;
+      return res.data.user;
     } catch (error) {
       console.log(error);
     }

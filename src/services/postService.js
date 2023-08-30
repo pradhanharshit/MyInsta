@@ -20,7 +20,7 @@ export const addPostHandler = async (postData, authToken) => {
 export const getAllPosts = createAsyncThunk("posts/getallposts", async () => {
   try {
     const res = await axios.get("api/posts");
-    return res;
+    return res.data.posts;
   } catch (error) {
     console.log(error);
   }
