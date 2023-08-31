@@ -7,6 +7,7 @@ import {
   BookmarkIcon,
   PaperAirplaneIcon,
   EllipsisHorizontalIcon,
+  PhotoIcon,
 } from "@heroicons/react/24/outline";
 import { useTheme } from "../../context/ThemeContext";
 import { useSelector, useDispatch } from "react-redux";
@@ -18,7 +19,11 @@ import { onPostUpdate } from "../../store/postSlice";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import CommentsModal from "../CommentsModal/CommentsModal";
-import { deletePostHandler } from "../../services/postService";
+import {
+  deletePostHandler,
+  editPostHandler,
+  getAllPosts,
+} from "../../services/postService";
 
 const PostCard = ({ postData }) => {
   const { themeObject } = useTheme();
@@ -28,6 +33,8 @@ const PostCard = ({ postData }) => {
   const [openCommentModal, setOpenCommentModal] = useState(false);
   const [openEditPost, setOpenEditPost] = useState(false);
   const [editPost, setEditPost] = useState(false);
+  const [editPostMedia, setEditPostMedia] = useState("");
+  const [editPostContent, setEditPostContent] = useState(postData.content);
 
   const dispatch = useDispatch();
 
@@ -47,7 +54,29 @@ const PostCard = ({ postData }) => {
     setOpenCommentModal(false);
   };
 
-  // console.log(postData);
+  const handlePostMediaChange = async (e) => {
+    const imageFile = e.target.files[0];
+
+    const url = `https://api.cloudinary.com/v1_1/${
+      import.meta.env.VITE_CLOUD_NAME
+    }/image/upload`;
+
+    const formData = new FormData();
+    formData.append("file", imageFile);
+    formData.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET);
+
+    const requestOptions = {
+      method: "POST",
+      body: formData,
+    };
+
+    await fetch(url, requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        setEditPostMedia(data.url);
+        toast.success("Media Uploaded!!");
+      });
+  };
 
   return (
     <>
@@ -88,9 +117,15 @@ const PostCard = ({ postData }) => {
                 onClick={() => setOpenEditPost(!openEditPost)}
               />
               {openEditPost && (
-                <div className="relative">
+                <div className="relative z-10">
                   <div className="absolute flex flex-col top-7 right-0 w-max bg-blue-400 text-white p-3 rounded-xl">
-                    <button>Edit post</button>
+                    <button
+                      onClick={() => {
+                        setEditPost(!editPost);
+                      }}
+                    >
+                      Edit post
+                    </button>
                     <div
                       className="border-t-2 m-1.5"
                       style={{ color: themeObject.color }}
@@ -112,17 +147,75 @@ const PostCard = ({ postData }) => {
         </div>
 
         <div className="">
-          <img
-            className="rounded-3xl mt-4 p-1 overflow-hidden"
-            src={postData.media}
-            alt=""
-          />
+          {editPost ? (
+            <div className="edit-media-div relative">
+              <img
+                className="rounded-3xl mt-4 p-1 overflow-hidden"
+                src={postData.media}
+              />
+              <div className="edit-media-container p-3 rounded-full bg-gray-400 opacity-50">
+                <input
+                  className="hidden"
+                  type="file"
+                  id="edit-media"
+                  onChange={(e) => {
+                    toast.success("Uploading media!!");
+                    setEditPostMedia(postData.media);
+                    handlePostMediaChange(e);
+                  }}
+                />
+                <label htmlFor="edit-media">
+                  <PhotoIcon
+                    className="h-[35px] w-[35px]"
+                    style={{ color: themeObject.text }}
+                  />
+                </label>
+              </div>
+            </div>
+          ) : (
+            <img
+              className="rounded-3xl mt-4 p-1 overflow-hidden"
+              src={postData.media}
+              alt=""
+            />
+          )}
         </div>
 
         <div>
-          <p className="mt-4 ml-1" style={{ color: themeObject.text }}>
-            {postData.content}
-          </p>
+          {editPost ? (
+            <div>
+              <textarea
+                className="grow rounded-2xl p-3 border-2 focus:border-blue-400 outline-none w-[100%]"
+                value={editPostContent}
+                onChange={(e) => setEditPostContent(e.target.value)}
+                style={{
+                  backgroundColor: themeObject.primary,
+                  color: themeObject.text,
+                }}
+              ></textarea>
+              <button
+                className="bg-blue-400 px-4 py-1 rounded-2xl text-white mr-4"
+                onClick={() => {
+                  editPostHandler(
+                    postData._id,
+                    { content: editPostContent, media: editPostMedia },
+                    authToken
+                  );
+                  dispatch(getAllPosts());
+                  setEditPost(false);
+                  setEditPostContent("");
+                  setEditPostMedia("");
+                  toast.success("Post edited!!");
+                }}
+              >
+                Save
+              </button>
+            </div>
+          ) : (
+            <p className="mt-4 ml-1" style={{ color: themeObject.text }}>
+              {postData.content}
+            </p>
+          )}
         </div>
 
         <div className="mt-4 flex justify-between">
