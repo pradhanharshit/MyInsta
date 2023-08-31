@@ -11,6 +11,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { onPostUpdate } from "../../store/postSlice";
 import { toast } from "react-toastify";
+import { getAllPosts } from "../../services/postService";
 
 const CommentsModal = ({ postId, closeOpenModal }) => {
   const { themeObject } = useTheme();
@@ -114,6 +115,7 @@ const CommentsModal = ({ postId, closeOpenModal }) => {
                       onClick={() => {
                         deleteCommentHandler(postId, comment._id, authToken);
                         setCommentEdited(!commentEdited);
+                        dispatch(getAllPosts());
                         toast.success("Comment deleted!!");
                       }}
                     />
