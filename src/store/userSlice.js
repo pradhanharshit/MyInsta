@@ -12,6 +12,7 @@ const userSlice = createSlice({
     userData: {},
     allUsers: [],
     currentId: "",
+    userEdited: false,
   },
   reducers: {
     changeCurrentId(state, action) {
@@ -23,7 +24,7 @@ const userSlice = createSlice({
       state.ownerData = JSON.parse(JSON.stringify(action.payload));
     });
     builder.addCase(getUserData.fulfilled, (state, action) => {
-      state.userData = action.payload.data.user;
+      state.userData = action.payload;
     });
     builder.addCase(getAllUsers.fulfilled, (state, action) => {
       state.allUsers = action.payload;
