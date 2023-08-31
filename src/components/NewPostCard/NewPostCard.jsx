@@ -3,9 +3,8 @@ import { useTheme } from "../../context/ThemeContext";
 import Card from "../Card/Card";
 import { PhotoIcon, FaceSmileIcon } from "@heroicons/react/24/outline";
 import { useEffect } from "react";
-import { addPostHandler } from "../../services/postService";
+import { addPostHandler, getAllPosts } from "../../services/postService";
 import { useSelector, useDispatch } from "react-redux";
-import { addedNewPost } from "../../store/postSlice";
 import { ClickOutHandler } from "react-clickout-ts";
 import EmojiPicker from "emoji-picker-react";
 import { toast } from "react-toastify";
@@ -123,7 +122,7 @@ const NewPostCard = () => {
                   },
                   authToken
                 );
-                dispatch(addedNewPost());
+                dispatch(getAllPosts());
                 setPostContent("");
                 setPostMedia("");
                 setImageReceived(false);
