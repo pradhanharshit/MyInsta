@@ -21,7 +21,7 @@ export const getUserData = createAsyncThunk(
   async (userid) => {
     try {
       const res = await axios.get(`/api/users/${userid}`);
-      return res;
+      return res.data.user;
     } catch (error) {
       console.log(error);
     }
@@ -31,7 +31,7 @@ export const getUserData = createAsyncThunk(
 export const getAllUsers = createAsyncThunk("user/users", async () => {
   try {
     const res = await axios.get("api/users");
-    return res;
+    return res.data.users;
   } catch (error) {
     console.log(error);
   }
