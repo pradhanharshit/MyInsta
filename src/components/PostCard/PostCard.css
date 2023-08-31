@@ -23,5 +23,12 @@
 .edit-media-div {
   height: max-content;
   width: 100%;
-  filter: grayscale(60%);
+  filter: grayscale(70%);
+}
+
+.edit-media-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
