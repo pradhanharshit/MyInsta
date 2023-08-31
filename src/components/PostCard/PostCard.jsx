@@ -39,15 +39,15 @@ const PostCard = ({ postData }) => {
   const dispatch = useDispatch();
 
   const likePost = () => {
-    dispatch(onPostUpdate());
-    toast.success("Post Liked!!");
     likePostHandler(postData._id, authToken);
+    toast.success("Post Liked!!");
+    dispatch(getAllPosts());
   };
 
   const dislikePost = () => {
-    dispatch(onPostUpdate());
-    toast.success("Post Disliked!!");
     dislikePostHandler(postData._id, authToken);
+    toast.success("Post Disliked!!");
+    dispatch(getAllPosts());
   };
 
   const closeOpenModal = () => {
