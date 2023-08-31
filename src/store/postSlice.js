@@ -5,7 +5,6 @@ import { getBookmarkedPosts } from "../services/bookmarkService";
 const postSlice = createSlice({
   name: "posts",
   initialState: {
-    allPosts: [],
     homeFeedPosts: [],
     bookmarkedPosts: [],
     newPostAdded: true,
@@ -21,7 +20,7 @@ const postSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getAllPosts.fulfilled, (state, action) => {
-      state.allPosts = JSON.parse(JSON.stringify(action.payload));
+      state.homeFeedPosts = JSON.parse(JSON.stringify(action.payload));
     });
     builder.addCase(getBookmarkedPosts.fulfilled, (state, action) => {
       state.bookmarkedPosts = action.payload;
