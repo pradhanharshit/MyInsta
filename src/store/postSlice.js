@@ -6,6 +6,7 @@ const postSlice = createSlice({
   name: "posts",
   initialState: {
     homeFeedPosts: [],
+    exploreFeedPosts: [],
     bookmarkedPosts: [],
     newPostAdded: true,
     postUpdated: true,
@@ -21,6 +22,7 @@ const postSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getAllPosts.fulfilled, (state, action) => {
       state.homeFeedPosts = JSON.parse(JSON.stringify(action.payload));
+      state.exploreFeedPosts = action.payload;
     });
     builder.addCase(getBookmarkedPosts.fulfilled, (state, action) => {
       state.bookmarkedPosts = action.payload;
