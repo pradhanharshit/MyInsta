@@ -36,7 +36,7 @@ export const removeBookmarkHandler = async (postId, authToken) => {
 };
 
 export const getBookmarkedPosts = createAsyncThunk(
-  "user/bookmark",
+  "posts/getbookmark",
   async (authToken) => {
     try {
       const res = await axios.get("api/users/bookmark", {
