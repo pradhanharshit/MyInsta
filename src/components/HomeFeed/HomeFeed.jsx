@@ -8,7 +8,7 @@ import { getOwnerData } from "../../services/userService";
 import { changeCurrentId } from "../../store/userSlice";
 
 const HomeFeed = () => {
-  const { newPostAdded, allPosts, postUpdated } = useSelector(
+  const { newPostAdded, homeFeedPosts, postUpdated } = useSelector(
     (state) => state.posts
   );
   const { ownerData } = useSelector((state) => state.users);
@@ -24,7 +24,7 @@ const HomeFeed = () => {
     dispatch(getAllPosts());
   }, [newPostAdded, postUpdated]);
 
-  let filteredHomeFeed = JSON.parse(JSON.stringify(allPosts));
+  let filteredHomeFeed = JSON.parse(JSON.stringify(homeFeedPosts));
 
   filteredHomeFeed = filteredHomeFeed.filter(
     (post) =>
