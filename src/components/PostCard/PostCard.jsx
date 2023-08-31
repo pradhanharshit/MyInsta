@@ -41,13 +41,13 @@ const PostCard = ({ postData }) => {
   const likePost = () => {
     dispatch(onPostUpdate());
     toast.success("Post Liked!!");
-    dispatch(likePostHandler(postData._id, authToken));
+    likePostHandler(postData._id, authToken);
   };
 
   const dislikePost = () => {
     dispatch(onPostUpdate());
     toast.success("Post Disliked!!");
-    dispatch(dislikePostHandler(postData._id, authToken));
+    dislikePostHandler(postData._id, authToken);
   };
 
   const closeOpenModal = () => {
@@ -122,6 +122,8 @@ const PostCard = ({ postData }) => {
                     <button
                       onClick={() => {
                         setEditPost(!editPost);
+                        setEditPostContent(postData.content);
+                        setEditPostMedia(postData.media);
                       }}
                     >
                       Edit post
@@ -204,7 +206,6 @@ const PostCard = ({ postData }) => {
                   dispatch(getAllPosts());
                   setEditPost(false);
                   setEditPostContent("");
-                  setEditPostMedia("");
                   toast.success("Post edited!!");
                 }}
               >
