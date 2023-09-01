@@ -8,15 +8,16 @@ import LoginPage from "../pages/Login/LoginPage";
 import SignUp from "../pages/Signup/SignUp";
 import App from "../App";
 import Bookmarks from "../pages/Bookmarks/Bookmarks";
-import MyProfile from "../pages/MyProfile/MyProfile";
+import Profile from "../pages/Profile/Profile";
 import Explore from "../pages/Explore/Explore";
 import ConnectPeople from "../pages/ConnectPeople/ConnectPeople";
 import HomeFeed from "../components/HomeFeed/HomeFeed";
 import Followers from "../pages/Followers/Followers";
 import Following from "../pages/Following/Following";
-import Profile from "../components/Profile/Profile";
+import ProfilePosts from "../components/ProfilePosts/ProfilePosts";
 import AuthRoute from "../components/AuthRoute/AuthRoute";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
+import Connections from "../pages/Connections/Connections";
 
 const Router = () => {
   const router = createBrowserRouter(
@@ -31,10 +32,12 @@ const Router = () => {
             <Route index element={<HomeFeed />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/bookmarks" element={<Bookmarks />} />
-            <Route path="/my-profile" element={<MyProfile />}>
-              <Route index element={<Profile />} />
+            <Route path="/connections" element={<Connections />}>
               <Route path="following" element={<Following />} />
               <Route path="followers" element={<Followers />} />
+            </Route>
+            <Route path="/profile/:username" element={<Profile />}>
+              <Route index element={<ProfilePosts />} />
             </Route>
             <Route path="/connect-people" element={<ConnectPeople />}></Route>
           </Route>
@@ -43,11 +46,7 @@ const Router = () => {
     )
   );
 
-  return (
-    <>
-      <RouterProvider router={router} />
-    </>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default Router;
