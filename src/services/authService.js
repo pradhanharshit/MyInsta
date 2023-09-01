@@ -11,7 +11,7 @@ export const loginHandler = createAsyncThunk(
       localStorage.setItem(
         "user",
         JSON.stringify({
-          username: res.data.foundUser.userName,
+          username: res.data.foundUser.username,
           _id: res.data.foundUser._id,
           firstName: res.data.foundUser.firstName,
           lastName: res.data.foundUser.lastName,
