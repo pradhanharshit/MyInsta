@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const addBookmarkHandler = async (postId, authToken) => {
+export const addToBookmark = async (postId, authToken) => {
   try {
     const res = await axios.post(
-      `api/users/bookmark/${postId}`,
+      `/api/users/bookmark/${postId}`,
       {},
       {
         headers: {
@@ -13,15 +13,14 @@ export const addBookmarkHandler = async (postId, authToken) => {
       }
     );
     return res;
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
   }
 };
-
-export const removeBookmarkHandler = async (postId, authToken) => {
+export const removeFromBookmark = async (postId, authToken) => {
   try {
     const res = await axios.post(
-      `api/users/remove-bookmark/${postId}`,
+      `/api/users/remove-bookmark/${postId}`,
       {},
       {
         headers: {
@@ -30,13 +29,13 @@ export const removeBookmarkHandler = async (postId, authToken) => {
       }
     );
     return res;
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
   }
 };
 
-export const getBookmarkedPosts = createAsyncThunk(
-  "posts/getbookmark",
+export const getBookmarks = createAsyncThunk(
+  "posts/getbookmarks",
   async (authToken) => {
     try {
       const res = await axios.get("api/users/bookmark", {
@@ -45,8 +44,8 @@ export const getBookmarkedPosts = createAsyncThunk(
         },
       });
       return res.data.bookmarks;
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   }
 );
