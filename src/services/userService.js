@@ -28,9 +28,9 @@ export const getUserData = createAsyncThunk(
   }
 );
 
-export const getAllUsers = createAsyncThunk("user/users", async () => {
+export const getAllUsers = createAsyncThunk("user/allusers", async () => {
   try {
-    const res = await axios.get("api/users");
+    const res = await axios.get("/api/users");
     return res.data.users;
   } catch (error) {
     console.log(error);

@@ -21,7 +21,7 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getOwnerData.fulfilled, (state, action) => {
-      state.ownerData = JSON.parse(JSON.stringify(action.payload));
+      state.ownerData = action.payload;
     });
     builder.addCase(getUserData.fulfilled, (state, action) => {
       state.userData = action.payload;
