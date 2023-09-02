@@ -1,10 +1,9 @@
 import axios from "axios";
 
-export const likePostHandler = async (postId, authToken) => {
+export const likePost = async (postId, authToken) => {
   try {
-    // console.log("try", postId, authToken);
     const res = await axios.post(
-      `api/posts/like/${postId}`,
+      `/api/posts/like/${postId}`,
       {},
       {
         headers: {
@@ -12,17 +11,16 @@ export const likePostHandler = async (postId, authToken) => {
         },
       }
     );
-    // console.log(res);
     return res;
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
   }
 };
 
-export const dislikePostHandler = async (postId, authToken) => {
+export const dislikePost = async (postId, authToken) => {
   try {
     const res = await axios.post(
-      `api/posts/dislike/${postId}`,
+      `/api/posts/dislike/${postId}`,
       {},
       {
         headers: {
@@ -31,7 +29,7 @@ export const dislikePostHandler = async (postId, authToken) => {
       }
     );
     return res;
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
   }
 };
