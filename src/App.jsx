@@ -10,22 +10,27 @@ import { useTheme } from "./context/ThemeContext";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllPosts } from "./services/postService";
-import { getOwnerData } from "./services/userService";
+import { getAllUsers, getOwnerData, getUserData } from "./services/userService";
 import { changeCurrentId } from "./store/userSlice";
 
 function App() {
   const { themeObject } = useTheme();
   const { user } = useSelector((state) => state.auth);
-  const { ownerData } = useSelector((state) => state.users);
+  const { currentId, userEdited } = useSelector((state) => state.users);
   const dispatch = useDispatch();
 
   // console.log(ownerData);
 
   useEffect(() => {
     dispatch(getOwnerData(JSON.parse(JSON.stringify(user._id))));
-    dispatch(changeCurrentId(ownerData._id));
+    dispatch(changeCurrentId(user._id));
     dispatch(getAllPosts());
   }, []);
+
+  useEffect(() => {
+    dispatch(getUserData(currentId));
+    dispatch(getAllUsers());
+  }, [currentId, userEdited]);
 
   return (
     <div
