@@ -25,7 +25,7 @@ const ConnectPeople = () => {
             ) === false
         )
         .map((userdata) => {
-          return <ConnectUserCard userdata={userdata} key={userdata.id} />;
+          return <ConnectUserCard userdata={userdata} key={userdata._id} />;
         })}
     </>
   );
