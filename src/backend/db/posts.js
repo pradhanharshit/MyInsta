@@ -51,7 +51,7 @@ export const posts = [
   {
     _id: "e7fee945-af35-4028-80ac-d139528cc1dd",
     user_id: "531585dd-f521-4cb3-a3e9-415e3fec4cc4",
-    content: "You say GOAT..I hear MSD!!",
+    content: "You say MSD..I hear GOAT!!",
     likes: {
       likeCount: 0,
       likedBy: [],
