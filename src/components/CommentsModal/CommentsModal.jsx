@@ -55,7 +55,7 @@ const CommentsModal = ({ postId, closeOpenModal }) => {
         style={{ backgroundColor: themeObject.secondary }}
       ></div>
       <div
-        className="modal-container p-6 w-[30%] h-[30%] rounded-2xl border-2 border-blue-400  overflow-y-scroll"
+        className="modal-container p-6 w-[30%] h-[40%] rounded-2xl border-2 border-blue-400  overflow-y-scroll"
         style={{ backgroundColor: themeObject.primary }}
       >
         <XMarkIcon
