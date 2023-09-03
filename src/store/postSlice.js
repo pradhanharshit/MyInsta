@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllPosts } from "../services/postService";
+import { getAllPosts, getAllPostsFromUsername } from "../services/postService";
 import { getBookmarks } from "../services/bookmarkService";
 
 const postSlice = createSlice({
@@ -8,6 +8,7 @@ const postSlice = createSlice({
     homeFeedPosts: [],
     exploreFeedPosts: [],
     bookmarkedPosts: [],
+    userPosts: [],
     newPostAdded: true,
     postUpdated: true,
   },
@@ -21,12 +22,17 @@ const postSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getAllPosts.fulfilled, (state, action) => {
-      state.homeFeedPosts = action.payload;
+      state.homeFeedPosts = JSON.parse(JSON.stringify(action.payload));
       state.exploreFeedPosts = action.payload;
     });
     builder.addCase(getBookmarks.fulfilled, (state, action) => {
       state.bookmarkedPosts = action.payload;
       console.log(state.bookmarkedPosts);
+    });
+    builder.addCase(getAllPostsFromUsername.fulfilled, (state, action) => {
+      state.userPosts = action.payload;
+      console.log(state.userPosts);
+      // console.log(state.userPosts);
     });
   },
 });
