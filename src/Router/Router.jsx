@@ -33,13 +33,13 @@ const Router = () => {
             <Route path="/explore" element={<Explore />} />
             <Route path="/bookmarks" element={<Bookmarks />} />
             <Route path="/connections" element={<Connections />}>
-              <Route path="following" element={<Following />} />
-              <Route path="followers" element={<Followers />} />
+              <Route path="/connections/following" element={<Following />} />
+              <Route path="/connections/followers" element={<Followers />} />
             </Route>
-            <Route path="/profile/:username" element={<Profile />}>
+            <Route path="/profile/:username/" element={<Profile />}>
               <Route index element={<ProfilePosts />} />
             </Route>
-            <Route path="/connect-people" element={<ConnectPeople />}></Route>
+            <Route path="/connect-people" element={<ConnectPeople />} />
           </Route>
         </Route>
       </Route>
