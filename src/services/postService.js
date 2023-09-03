@@ -56,11 +56,14 @@ export const editPostHandler = async (postId, postData, authToken) => {
   }
 };
 
-export const getAllPostsFromUsername = async (username) => {
-  try {
-    const res = await axios.get(`/api/posts/user/${username}`);
-    return res;
-  } catch (err) {
-    console.log(err);
+export const getAllPostsFromUsername = createAsyncThunk(
+  "posts/userposts",
+  async (username) => {
+    try {
+      const res = await axios.get(`/api/posts/user/${username}`);
+      return res.data.posts;
+    } catch (err) {
+      console.log(err);
+    }
   }
-};
+);
