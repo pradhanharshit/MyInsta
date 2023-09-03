@@ -9,13 +9,15 @@ import {
 } from "@heroicons/react/24/outline";
 import { HomeIcon } from "@heroicons/react/20/solid";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/authSlice";
 import "./SideBar.css";
 import { useTheme } from "../../context/ThemeContext";
+import { changeCurrentId } from "../../store/userSlice";
 
 const SideBar = () => {
   const { theme, themeObject, toggleThemeHandler } = useTheme();
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   return (
     <div
@@ -58,7 +60,13 @@ const SideBar = () => {
         <p className="ressp text-xl">Find People</p>
       </NavLink>
 
-      <NavLink to="my-profile" className="flex space-x-3 items-center mb-10">
+      <NavLink
+        to={`profile/${user.username}`}
+        onClick={() => {
+          dispatch(changeCurrentId(user._id));
+        }}
+        className="flex space-x-3 items-center mb-10"
+      >
         <UserIcon className="heroicon-outline h-[30px] w-[30px]"></UserIcon>
         <p className="ressp text-xl">Profile</p>
       </NavLink>
