@@ -16,7 +16,7 @@ import { changeCurrentId } from "./store/userSlice";
 function App() {
   const { themeObject } = useTheme();
   const { user } = useSelector((state) => state.auth);
-  const { currentId, userEdited } = useSelector((state) => state.users);
+  const { currentId } = useSelector((state) => state.users);
   const dispatch = useDispatch();
 
   // console.log(ownerData);
@@ -30,7 +30,7 @@ function App() {
   useEffect(() => {
     dispatch(getUserData(currentId));
     dispatch(getAllUsers());
-  }, [currentId, userEdited]);
+  }, [currentId]);
 
   return (
     <div
