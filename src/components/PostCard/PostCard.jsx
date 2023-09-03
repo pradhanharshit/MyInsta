@@ -11,11 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useTheme } from "../../context/ThemeContext";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  likePostHandler,
-  dislikePostHandler,
-} from "../../services/likedislikeService";
-import { onPostUpdate } from "../../store/postSlice";
+import { likePost, dislikePost } from "../../services/likedislikeService";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import CommentsModal from "../CommentsModal/CommentsModal";
@@ -24,11 +20,17 @@ import {
   editPostHandler,
   getAllPosts,
 } from "../../services/postService";
+import {
+  addToBookmark,
+  removeFromBookmark,
+  getBookmarks,
+} from "../../services/bookmarkService";
 
 const PostCard = ({ postData }) => {
   const { themeObject } = useTheme();
   const { authToken } = useSelector((state) => state.auth);
   const { ownerData } = useSelector((state) => state.users);
+  const { bookmarkedPosts } = useSelector((state) => state.posts);
 
   const [openCommentModal, setOpenCommentModal] = useState(false);
   const [openEditPost, setOpenEditPost] = useState(false);
@@ -37,18 +39,6 @@ const PostCard = ({ postData }) => {
   const [editPostContent, setEditPostContent] = useState(postData.content);
 
   const dispatch = useDispatch();
-
-  const likePost = () => {
-    likePostHandler(postData._id, authToken);
-    toast.success("Post Liked!!");
-    dispatch(getAllPosts());
-  };
-
-  const dislikePost = () => {
-    dislikePostHandler(postData._id, authToken);
-    toast.success("Post Disliked!!");
-    dispatch(getAllPosts());
-  };
 
   const closeOpenModal = () => {
     setOpenCommentModal(false);
@@ -83,8 +73,8 @@ const PostCard = ({ postData }) => {
       {openCommentModal && (
         <CommentsModal
           closeOpenModal={closeOpenModal}
-          comments={postData.comments}
-          postId={postData._id}
+          comments={postData?.comments}
+          postId={postData?._id}
         />
       )}
       <Card>
@@ -99,17 +89,17 @@ const PostCard = ({ postData }) => {
             </div>
             <div className="text-center">
               <p className="text-lg" style={{ color: themeObject.text }}>
-                {postData.firstName} {postData.lastName}
+                {postData?.firstName} {postData?.lastName}
               </p>
               <p
                 className="text-sm text-gray-600"
                 style={{ color: themeObject.text }}
               >
-                {postData.username}
+                {postData?.username}
               </p>
             </div>
           </div>
-          {postData.user_id === ownerData._id && (
+          {postData?.user_id === ownerData._id && (
             <div className="flex">
               <EllipsisHorizontalIcon
                 className="h-[30px] w-[30px]"
@@ -135,7 +125,7 @@ const PostCard = ({ postData }) => {
                     <button
                       onClick={() => {
                         deletePostHandler(postData._id, authToken);
-                        dispatch(onPostUpdate());
+                        dispatch(getAllPosts());
                         toast.success("Post deleted!!");
                       }}
                     >
@@ -153,7 +143,7 @@ const PostCard = ({ postData }) => {
             <div className="edit-media-div relative">
               <img
                 className="rounded-3xl mt-4 p-1 overflow-hidden"
-                src={postData.media}
+                src={postData?.media}
               />
               <div className="edit-media-container p-3 rounded-full bg-gray-400 opacity-50">
                 <input
@@ -162,7 +152,7 @@ const PostCard = ({ postData }) => {
                   id="edit-media"
                   onChange={(e) => {
                     toast.success("Uploading media!!");
-                    setEditPostMedia(postData.media);
+                    setEditPostMedia(postData?.media);
                     handlePostMediaChange(e);
                   }}
                 />
@@ -177,7 +167,7 @@ const PostCard = ({ postData }) => {
           ) : (
             <img
               className="rounded-3xl mt-4 p-1 overflow-hidden"
-              src={postData.media}
+              src={postData?.media}
               alt=""
             />
           )}
@@ -225,12 +215,20 @@ const PostCard = ({ postData }) => {
               <HeartIcon
                 className="icons h-[30px] w-[30px] text-red-400 hover:animate-bounce"
                 onClick={() => {
-                  // console.log(postData);
-                  postData.likes.likedBy.some(
-                    (user) => user._id === ownerData._id
-                  )
-                    ? dislikePost()
-                    : likePost();
+                  if (
+                    postData?.likes?.likedBy?.some(
+                      (likedBy) => ownerData?.username === likedBy.username
+                    )
+                  ) {
+                    dislikePost(postData._id, authToken);
+                    dispatch(getAllPosts());
+                    toast.success("Post Disliked!!");
+                  } else {
+                    likePost(postData._id, authToken);
+                    dispatch(getAllPosts());
+                    toast.success("Post Liked!!");
+                    console.log("called from here like");
+                  }
                 }}
                 style={{
                   fill: postData.likes.likedBy.some(
@@ -258,7 +256,24 @@ const PostCard = ({ postData }) => {
             </div>
           </div>
           <div>
-            <BookmarkIcon className="icons h-[30px] w-[30px] text-green-400 hover:scale-125" />
+            <BookmarkIcon
+              className="icons h-[30px] w-[30px] text-green-400 hover:scale-125"
+              onClick={() => {
+                if (
+                  bookmarkedPosts?.some(
+                    (bookmarkedPost) => bookmarkedPost?._id === postData?._id
+                  ) === true
+                ) {
+                  removeFromBookmark(postData?._id, authToken);
+                  toast.success("Removed from bookmark!");
+                } else {
+                  addToBookmark(postData?._id, authToken);
+                  toast.success("Added to bookmark!");
+                }
+
+                dispatch(getBookmarks(authToken));
+              }}
+            />
           </div>
         </div>
       </Card>
