@@ -15,13 +15,13 @@ const Profile = () => {
       >
         <img
           className="h-[40%] w-[100%] rounded-t-3xl"
-          src={userData.coverPicture}
+          src={userData?.coverPicture}
           alt=""
         />
 
         <img
           className="myprofile-img rounded-full"
-          src={userData.profilePicture}
+          src={userData?.profilePicture}
           alt=""
         />
 
@@ -30,13 +30,13 @@ const Profile = () => {
           style={{ color: themeObject.text }}
         >
           <span className="text-3xl">
-            {userData.firstName} {userData.lastName}
+            {userData?.firstName} {userData?.lastName}
           </span>
           <span
             className="text-sm text-gray-700"
             style={{ color: themeObject.text }}
           >
-            {userData.username}
+            {userData?.username}
           </span>
         </div>
 
@@ -44,13 +44,13 @@ const Profile = () => {
           className="homeprofile-bio pl-5 pr-5 mt-5 text-center text-gray-700"
           style={{ color: themeObject.text }}
         >
-          {userData.bio}
+          {userData?.bio}
         </div>
 
         <div className="mt-8 flex justify-around pl-8 pr-8 text-base">
           <div className="followers flex space-x-1">
             <span style={{ color: themeObject.text }}>
-              {userData.followers.length}
+              {userData?.followers?.length}
             </span>
             <Link
               to="/connections/followers"
@@ -62,7 +62,7 @@ const Profile = () => {
           <div className="sp-ln"></div>
           <div className="following flex space-x-1">
             <span style={{ color: themeObject.text }}>
-              {userData.following.length}
+              {userData?.following?.length}
             </span>
             <Link
               to="/connections/following"
