@@ -58,7 +58,7 @@ export const posts = [
       dislikedBy: [],
     },
     comments: [],
-    username: "test@1",
+    username: "test@harshit",
     firstName: "Harshit",
     lastName: "Pradhan",
     profilePicture:
