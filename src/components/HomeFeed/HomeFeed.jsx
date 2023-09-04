@@ -11,7 +11,7 @@ const HomeFeed = () => {
 
   filteredHomeFeed = filteredHomeFeed.filter(
     (post) =>
-      ownerData.following.some((user) => user._id === post.user_id) ||
+      ownerData?.following.some((user) => user._id === post.user_id) ||
       post.user_id === ownerData._id
   );
 
