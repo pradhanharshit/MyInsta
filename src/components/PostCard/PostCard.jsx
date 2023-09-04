@@ -36,7 +36,7 @@ const PostCard = ({ postData }) => {
   const [openEditPost, setOpenEditPost] = useState(false);
   const [editPost, setEditPost] = useState(false);
   const [editPostMedia, setEditPostMedia] = useState("");
-  const [editPostContent, setEditPostContent] = useState(postData.content);
+  const [editPostContent, setEditPostContent] = useState(postData?.content);
 
   const dispatch = useDispatch();
 
@@ -83,7 +83,7 @@ const PostCard = ({ postData }) => {
             <div>
               <img
                 className="rounded-full w-14 h-14"
-                src={postData.profilePicture}
+                src={postData?.profilePicture}
                 alt=""
               />
             </div>
@@ -112,8 +112,8 @@ const PostCard = ({ postData }) => {
                     <button
                       onClick={() => {
                         setEditPost(!editPost);
-                        setEditPostContent(postData.content);
-                        setEditPostMedia(postData.media);
+                        setEditPostContent(postData?.content);
+                        setEditPostMedia(postData?.media);
                       }}
                     >
                       Edit post
@@ -124,7 +124,7 @@ const PostCard = ({ postData }) => {
                     ></div>
                     <button
                       onClick={() => {
-                        deletePostHandler(postData._id, authToken);
+                        deletePostHandler(postData?._id, authToken);
                         dispatch(getAllPosts());
                         toast.success("Post deleted!!");
                       }}
@@ -189,7 +189,7 @@ const PostCard = ({ postData }) => {
                 className="bg-blue-400 px-4 py-1 rounded-2xl text-white mr-4"
                 onClick={() => {
                   editPostHandler(
-                    postData._id,
+                    postData?._id,
                     { content: editPostContent, media: editPostMedia },
                     authToken
                   );
@@ -204,7 +204,7 @@ const PostCard = ({ postData }) => {
             </div>
           ) : (
             <p className="mt-4 ml-1" style={{ color: themeObject.text }}>
-              {postData.content}
+              {postData?.content}
             </p>
           )}
         </div>
@@ -220,18 +220,17 @@ const PostCard = ({ postData }) => {
                       (likedBy) => ownerData?.username === likedBy.username
                     )
                   ) {
-                    dislikePost(postData._id, authToken);
+                    dislikePost(postData?._id, authToken);
                     dispatch(getAllPosts());
                     toast.success("Post Disliked!!");
                   } else {
-                    likePost(postData._id, authToken);
+                    likePost(postData?._id, authToken);
                     dispatch(getAllPosts());
                     toast.success("Post Liked!!");
-                    console.log("called from here like");
                   }
                 }}
                 style={{
-                  fill: postData.likes.likedBy.some(
+                  fill: postData?.likes.likedBy.some(
                     (user) => user._id === ownerData._id
                   )
                     ? "rgb(248 113 113)"
@@ -239,7 +238,7 @@ const PostCard = ({ postData }) => {
                 }}
               />
               <span style={{ color: themeObject.text }}>
-                {postData.likes.likeCount}
+                {postData?.likes?.likeCount}
               </span>
             </div>
             <div className="flex gap-1">
@@ -248,7 +247,7 @@ const PostCard = ({ postData }) => {
                 onClick={() => setOpenCommentModal(!openCommentModal)}
               />
               <span style={{ color: themeObject.text }}>
-                {postData.comments.length}
+                {postData?.comments?.length}
               </span>
             </div>
             <div>
