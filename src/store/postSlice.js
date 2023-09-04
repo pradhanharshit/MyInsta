@@ -8,7 +8,6 @@ const postSlice = createSlice({
     homeFeedPosts: [],
     exploreFeedPosts: [],
     bookmarkedPosts: [],
-    userPosts: [],
     newPostAdded: true,
     postUpdated: true,
   },
@@ -28,11 +27,6 @@ const postSlice = createSlice({
     builder.addCase(getBookmarks.fulfilled, (state, action) => {
       state.bookmarkedPosts = action.payload;
       console.log(state.bookmarkedPosts);
-    });
-    builder.addCase(getAllPostsFromUsername.fulfilled, (state, action) => {
-      state.userPosts = action.payload;
-      console.log(state.userPosts);
-      // console.log(state.userPosts);
     });
   },
 });
