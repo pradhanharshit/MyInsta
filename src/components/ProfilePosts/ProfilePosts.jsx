@@ -1,29 +1,26 @@
-import "./ProfilePosts.css";
-import { useEffect, useState } from "react";
-import { getAllPostsFromUsername } from "../../services/postService";
+import { useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { getAllPostsFromUsername } from "../../services/postService";
 import PostCard from "../PostCard/PostCard";
 
-function ProfilePosts() {
-  const { userData } = useSelector((state) => state.users);
-  const { homeFeed } = useSelector((state) => state.posts);
+const ProfilePosts = () => {
+  const { userData } = useSelector((store) => store.users);
+  const { homeFeedPosts } = useSelector((store) => store.posts);
   const [userPosts, setUserPosts] = useState([]);
 
+  const getUserPosts = async () => {
+    const res = await getAllPostsFromUsername(userData?.username);
+    setUserPosts(res);
+  };
+
   useEffect(() => {
-    (async () => {
-      const res = await getAllPostsFromUsername(userData?.username);
-      setUserPosts(res.data.posts);
-      // console.log(res);
-    })();
-  }, [userData, homeFeed]);
-  console.log(userPosts);
-  return (
-    <>
-      {userPosts.map((userpost) => {
-        return <PostCard postData={userpost} key={userpost._id} />;
-      })}
-    </>
-  );
-}
+    getUserPosts();
+  }, [userData, homeFeedPosts]);
+
+  return userPosts?.map((post) => {
+    return <PostCard key={post._id} postData={post} />;
+  });
+};
 
 export default ProfilePosts;
