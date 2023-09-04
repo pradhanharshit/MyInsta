@@ -18,6 +18,7 @@ import ProfilePosts from "../components/ProfilePosts/ProfilePosts";
 import AuthRoute from "../components/AuthRoute/AuthRoute";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import Connections from "../pages/Connections/Connections";
+import Username from "../pages/Username/Username";
 
 const Router = () => {
   const router = createBrowserRouter(
@@ -36,7 +37,7 @@ const Router = () => {
               <Route path="/connections/following" element={<Following />} />
               <Route path="/connections/followers" element={<Followers />} />
             </Route>
-            <Route path="/profile/:username/" element={<Profile />}>
+            <Route path="/:username" element={<Profile />}>
               <Route index element={<ProfilePosts />} />
             </Route>
             <Route path="/connect-people" element={<ConnectPeople />} />
