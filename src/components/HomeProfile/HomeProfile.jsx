@@ -9,7 +9,7 @@ const HomeProfile = () => {
   // console.log(ownerData);
   return (
     <div
-      className="homeprofile-container w-[21.5rem] h-fit rounded-3xl"
+      className="homeprofile-container w-[20rem] h-[28rem] rounded-3xl"
       style={{ backgroundColor: themeObject.secondary }}
     >
       <img
@@ -23,13 +23,21 @@ const HomeProfile = () => {
       />
 
       <div className="flex flex-col mt-9 text-center">
-        <span className="text-xl">
+        <span className="text-xl" style={{ color: themeObject.text }}>
           {ownerData?.firstName} {ownerData?.lastName}
         </span>
-        <span className="text-sm text-gray-700">{ownerData?.username}</span>
+        <span
+          className="text-sm text-gray-700"
+          style={{ color: themeObject.text }}
+        >
+          {ownerData?.username}
+        </span>
       </div>
 
-      <div className="homeprofile-bio pl-5 pr-5 mt-5 text-center text-gray-700">
+      <div
+        className="homeprofile-bio pl-5 pr-5 mt-5 text-center text-gray-700"
+        style={{ color: themeObject.text }}
+      >
         {ownerData?.bio}
       </div>
 
