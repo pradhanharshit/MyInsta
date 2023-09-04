@@ -17,7 +17,7 @@ const ConnectUserCard = ({ userdata }) => {
     <>
       <Card>
         <div className="flex justify-between items-center">
-          <Link to={`/profile/${userdata?.username}`}>
+          <Link to={`/${userdata?.username}`}>
             <img
               className="rounded-full h-[50px] w-[50px]"
               src={userdata.profilePicture}
@@ -31,7 +31,7 @@ const ConnectUserCard = ({ userdata }) => {
               {userdata?.firstName} {userdata?.lastName}
             </p>
             <Link
-              to={`/profile/${userdata?.username}`}
+              to={`/${userdata?.username}`}
               onClick={() => {
                 dispatch(changeCurrentId(userdata?._id));
               }}
