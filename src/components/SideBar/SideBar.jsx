@@ -61,7 +61,7 @@ const SideBar = () => {
       </NavLink>
 
       <NavLink
-        to={`profile/${user.username}`}
+        to={`/${user.username}`}
         onClick={() => {
           dispatch(changeCurrentId(user._id));
         }}
