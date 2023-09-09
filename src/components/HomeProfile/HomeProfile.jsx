@@ -59,7 +59,7 @@ const HomeProfile = () => {
 
       <div className="mt-5 mb-8 text-center text-lg font-semibold">
         <Link
-          to={`/profile/${ownerData?.username}`}
+          to={`/${ownerData?.username}`}
           className="px-3 py-2 rounded-3xl bg-blue-400 text-white"
         >
           My Profile
