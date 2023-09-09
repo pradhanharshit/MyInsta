@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useTheme } from "../../context/ThemeContext";
 import { XMarkIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import "./CommentsModal.css";
@@ -9,7 +10,6 @@ import {
   postCommentHandler,
 } from "../../services/commentsService";
 import { useSelector, useDispatch } from "react-redux";
-import { onPostUpdate } from "../../store/postSlice";
 import { toast } from "react-toastify";
 import { getAllPosts } from "../../services/postService";
 
@@ -35,7 +35,7 @@ const CommentsModal = ({ postId, closeOpenModal }) => {
         authToken
       );
       getCommentsHandler(postId).then((res) => setComments(res.data.comments));
-      dispatch(onPostUpdate());
+      dispatch(getAllPosts());
       setPostComment("");
       toast.success("Comment Added!!");
     }
@@ -44,8 +44,6 @@ const CommentsModal = ({ postId, closeOpenModal }) => {
   useEffect(() => {
     getCommentsHandler(postId).then((res) => setComments(res.data.comments));
   }, [commentEdited]);
-
-  //   console.log(comments);
 
   return (
     <>
