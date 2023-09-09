@@ -29,6 +29,16 @@ const SearchBar = () => {
     );
   }, [search]);
 
+  const debounce = (func, timeout = 500) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
+    };
+  };
+
   return (
     <div className="relative">
       <div className="search-container w-[20rem] mt-5">
@@ -41,9 +51,9 @@ const SearchBar = () => {
             backgroundColor: themeObject.secondary,
             color: themeObject.text,
           }}
-          onChange={(e) => {
+          onChange={debounce((e) => {
             setSearch(e.target.value);
-          }}
+          }, 500)}
         />
       </div>
 
