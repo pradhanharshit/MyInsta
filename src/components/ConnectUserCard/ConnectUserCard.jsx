@@ -20,7 +20,7 @@ const ConnectUserCard = ({ userdata }) => {
           <Link to={`/${userdata?.username}`}>
             <img
               className="rounded-full h-[50px] w-[50px]"
-              src={userdata.profilePicture}
+              src={userdata?.profilePicture}
               onClick={() => {
                 dispatch(changeCurrentId(userdata?._id));
               }}
@@ -51,7 +51,7 @@ const ConnectUserCard = ({ userdata }) => {
               onClick={() => {
                 {
                   ownerData.following.some(
-                    (user) => user.usename === userdata.username
+                    (user) => user.username === userdata?.username
                   )
                     ? unfollowUser(userdata?._id, authToken)
                     : followUser(userdata?._id, authToken);
@@ -61,7 +61,7 @@ const ConnectUserCard = ({ userdata }) => {
               }}
             >
               {ownerData.following.some(
-                (user) => user.usename === userdata.username
+                (user) => user.username === userdata?.username
               )
                 ? "following"
                 : "follow"}
