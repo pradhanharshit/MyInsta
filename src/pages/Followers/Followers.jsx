@@ -1,7 +1,15 @@
-const Followers = () => {
-  return (
-    <div>Followers</div>
-  )
-}
+import { useSelector } from "react-redux";
+import ConnectUserCard from "../../components/ConnectUserCard/ConnectUserCard";
 
-export default Followers
+const Followers = () => {
+  const { userData } = useSelector((state) => state.users);
+  return (
+    <>
+      {userData?.followers?.map((follower) => {
+        return <ConnectUserCard key={follower?._id} userdata={follower} />;
+      })}
+    </>
+  );
+};
+
+export default Followers;
