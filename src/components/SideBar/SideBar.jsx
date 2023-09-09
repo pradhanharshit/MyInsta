@@ -14,11 +14,15 @@ import { logout } from "../../store/authSlice";
 import "./SideBar.css";
 import { useTheme } from "../../context/ThemeContext";
 import { changeCurrentId } from "../../store/userSlice";
+import NewPostModal from "../NewPostModal/NewPostModal";
+import { useState } from "react";
 
 const SideBar = () => {
   const { theme, themeObject, toggleThemeHandler } = useTheme();
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  const [postModalOpen, setPostModalOpen] = useState(false);
   return (
     <div
       className="side-comp flex flex-col"
@@ -61,18 +65,30 @@ const SideBar = () => {
       </NavLink>
 
       <NavLink
-        to={`/${user.username}`}
+        to={`/${user?.username}`}
         onClick={() => {
-          dispatch(changeCurrentId(user._id));
+          dispatch(changeCurrentId(user?._id));
         }}
-        className="flex space-x-3 items-center mb-10"
+        className="flex space-x-3 items-center mb-5"
       >
         <UserIcon className="heroicon-outline h-[30px] w-[30px]"></UserIcon>
         <p className="ressp text-xl">Profile</p>
       </NavLink>
 
+      <div>
+        <button
+          className="bg-blue-400 px-4 py-2 text-lg rounded-2xl text-white mb-5"
+          onClick={() => {
+            setPostModalOpen(true);
+          }}
+        >
+          New Post
+        </button>
+        {postModalOpen && <NewPostModal setPostModalOpen={setPostModalOpen} />}
+      </div>
+
       <div
-        className="flex space-x-3 items-center mb-10 p-2 rounded-2xl"
+        className="flex space-x-3 items-center mb-5 p-2 rounded-2xl border-2 border-blue-400"
         style={{ backgroundColor: themeObject.secondary }}
         onClick={() => {
           if (theme === "light") {
@@ -87,7 +103,7 @@ const SideBar = () => {
         )}
       </div>
       <div
-        className="flex space-x-3 items-center mb-10 p-2 rounded-2xl"
+        className="flex space-x-3 items-center mb-10 p-2 rounded-2xl border-2 border-blue-400"
         style={{ backgroundColor: themeObject.secondary }}
         onClick={() => dispatch(logout())}
       >
