@@ -15,6 +15,8 @@ import HomeFeed from "../components/HomeFeed/HomeFeed";
 import Followers from "../pages/Followers/Followers";
 import Following from "../pages/Following/Following";
 import ProfilePosts from "../components/ProfilePosts/ProfilePosts";
+import ProfileMedia from "../pages/ProfileMedia/ProfileMedia";
+import ProfileLikes from "../pages/ProfileLikes/ProfileLikes";
 import AuthRoute from "../components/AuthRoute/AuthRoute";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import Connections from "../pages/Connections/Connections";
@@ -38,6 +40,8 @@ const Router = () => {
             </Route>
             <Route path="/:username" element={<Profile />}>
               <Route index element={<ProfilePosts />} />
+              <Route path="media" element={<ProfileMedia />} />
+              <Route path="likes" element={<ProfileLikes />} />
             </Route>
             <Route path="/connect-people" element={<ConnectPeople />} />
           </Route>
