@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import Card from "../Card/Card";
 import { PhotoIcon, FaceSmileIcon } from "@heroicons/react/24/outline";
-import { useEffect } from "react";
 import { addPostHandler, getAllPosts } from "../../services/postService";
 import { useSelector, useDispatch } from "react-redux";
 import { ClickOutHandler } from "react-clickout-ts";
@@ -47,14 +46,13 @@ const NewPostCard = () => {
       });
   };
 
-  useEffect(() => {});
   return (
     <Card>
       <div className="flex gap-3">
         <div>
           <img
-            className="w-12 rounded-full overflow-hidden"
-            src="Profile.png"
+            className="w-12 h-12 rounded-full overflow-hidden"
+            src={`${ownerData?.profilePicture}`}
             alt=""
           />
         </div>
