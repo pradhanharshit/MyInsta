@@ -1,26 +1,25 @@
 .bottombar {
-    width:100vw;
-    position: absolute;
-    bottom:0;
-    justify-content: space-evenly;
-    padding:2rem;
-    display: none;
-    background-color: #fff;
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+  justify-content: space-evenly;
+  padding: 2rem;
+  display: none;
+  background-color: #fff;
 }
 
-@media screen and (max-width: 680px) {
-    .bottombar{
-      width:100vw;
-      position: absolute;
-      bottom:0;
-      justify-content: space-evenly;
-      padding:1rem;
-      display: flex;
+@media screen and (max-width: 850px) {
+  .bottombar {
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    justify-content: space-evenly;
+    padding: 1rem;
+    display: flex;
   }
-  }
+}
 
 .active .heroicon-outline {
-    fill: rgb(96 165 250);
-    stroke: none;
+  fill: rgb(96 165 250);
+  stroke: none;
 }
-
