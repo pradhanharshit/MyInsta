@@ -32,7 +32,7 @@ const SideBar = () => {
         className="font-bold font-serif text-3xl mt-10 mb-10"
         style={{ color: themeObject.text }}
       >
-        Instagram
+        MyInsta
       </h1>
 
       <NavLink to="/" className="flex space-x-3 items-center mb-10">
