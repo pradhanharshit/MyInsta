@@ -1,12 +1,15 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./HomeProfile.css";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
+import { changeCurrentId } from "../../store/userSlice";
 
 const HomeProfile = () => {
   const { themeObject } = useTheme();
   const { ownerData } = useSelector((state) => state.users);
-  // console.log(ownerData);
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
   return (
     <div
       className="homeprofile-container w-[20rem] h-[28rem] rounded-3xl"
@@ -61,6 +64,9 @@ const HomeProfile = () => {
         <Link
           to={`/${ownerData?.username}`}
           className="px-3 py-2 rounded-3xl bg-blue-400 text-white"
+          onClick={() => {
+            dispatch(changeCurrentId(user._id));
+          }}
         >
           My Profile
         </Link>
