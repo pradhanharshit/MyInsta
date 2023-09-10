@@ -52,9 +52,6 @@ const NewPostModal = ({ setPostModalOpen }) => {
       <div
         className="post-modal-wrapper"
         style={{ backgroundColor: themeObject.secondary }}
-        onClick={() => {
-          setPostModalOpen(false);
-        }}
       ></div>
       <div
         className="post-modal-container rounded-2xl h-max w-[40%] p-8 border-2 border-blue-400"
