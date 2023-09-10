@@ -1,0 +1,9 @@
+.connection active {
+  font-size: 1.5rem;
+  color: rgb(96 165 250);
+}
+
+.connection {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
