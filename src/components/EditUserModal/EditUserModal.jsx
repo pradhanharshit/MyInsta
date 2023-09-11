@@ -10,7 +10,6 @@ import {
   getOwnerData,
   getUserData,
 } from "../../services/userService";
-import { changeUserEdited } from "../../store/userSlice";
 
 const EditUserModal = ({ setOpenUserEdit }) => {
   const { themeObject } = useTheme();
@@ -161,7 +160,6 @@ const EditUserModal = ({ setOpenUserEdit }) => {
               editUser({ ...ownerData, bio: editPostBio }, authToken);
               dispatch(getOwnerData(user._id));
               dispatch(getUserData(user._id));
-              dispatch(changeUserEdited());
               setOpenUserEdit(false);
             }}
           >
