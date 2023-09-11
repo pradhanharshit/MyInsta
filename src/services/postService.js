@@ -64,3 +64,16 @@ export const getAllPostsFromUsername = async (username) => {
     console.log(err);
   }
 };
+
+export const getPagedPosts = createAsyncThunk(
+  "posts/getPagedPosts",
+  async ({ pageNum, rejectWithValue }) => {
+    try {
+      const response = await axios.get(`/api/posts/page/${pageNum}`);
+      return response.data.posts;
+    } catch (error) {
+      console.error(error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
