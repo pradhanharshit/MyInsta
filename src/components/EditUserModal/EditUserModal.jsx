@@ -68,7 +68,7 @@ const EditUserModal = ({ setOpenUserEdit }) => {
         editUser({ ...ownerData, profilePicture: data.url }, authToken);
         dispatch(getOwnerData(JSON.parse(JSON.stringify(user._id))));
         dispatch(getUserData(user._id));
-        toast.success("Post Media Uploaded!!");
+        toast.success("Profile Media Uploaded!!");
       });
   };
 
@@ -127,7 +127,7 @@ const EditUserModal = ({ setOpenUserEdit }) => {
                   id="edit-media-profile"
                   onChange={(e) => {
                     handlePostMediaChange(e);
-                    toast.success("Uploading Post Media!!");
+                    toast.success("Uploading Profile Media!!");
                   }}
                 />
                 <label htmlFor="edit-media-profile">
