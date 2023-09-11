@@ -5,9 +5,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const getOwnerData = createAsyncThunk(
   "users/ownerdata",
   async (ownerid) => {
-    console.log("called");
     try {
-      // console.log("tried");
       const res = await axios.get(`/api/users/${ownerid}`);
       return res.data.user;
     } catch (error) {
