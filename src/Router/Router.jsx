@@ -20,6 +20,7 @@ import ProfileLikes from "../pages/ProfileLikes/ProfileLikes";
 import AuthRoute from "../components/AuthRoute/AuthRoute";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import Connections from "../pages/Connections/Connections";
+import Post from "../pages/Post/Post";
 
 const Router = () => {
   const router = createBrowserRouter(
@@ -32,6 +33,7 @@ const Router = () => {
         <Route path="/" element={<App />}>
           <Route element={<PrivateRoute />}>
             <Route index element={<HomeFeed />} />
+            <Route path="post/:username/:postId" element={<Post />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/bookmarks" element={<Bookmarks />} />
             <Route path="/connections" element={<Connections />}>

@@ -251,7 +251,15 @@ const PostCard = ({ postData }) => {
               </span>
             </div>
             <div>
-              <PaperAirplaneIcon className="icons h-[28px] w-[28px] text-blue-400 hover:scale-125" />
+              <PaperAirplaneIcon
+                className="icons h-[28px] w-[28px] text-blue-400 hover:scale-125"
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `https://harshit-myinsta.netlify.app/post/${postData?.username}/${postData?._id}`
+                  );
+                  toast.success("Post Link Copied");
+                }}
+              />
             </div>
           </div>
           <div>
